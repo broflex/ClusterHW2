@@ -19,7 +19,7 @@ public class MandelbrotJob implements Job{
 	}
 
 	@Override
-	public Object getAllResults() {
+	public int[] getAllResults() {
 		// TODO Auto-generated method stub
 		return null;
 	}
