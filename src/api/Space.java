@@ -3,6 +3,7 @@ package api;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 import java.util.List;
+
 import system.Computer;
 
 /**
@@ -17,6 +18,10 @@ public interface Space extends Remote
     void putAll ( List<Task> taskList ) throws RemoteException;
 
     Result take() throws RemoteException;
+    
+    Task takeTask() throws RemoteException, InterruptedException;
+    
+    void putResult(Result result) throws RemoteException, InterruptedException;
 
     void exit() throws RemoteException;
     

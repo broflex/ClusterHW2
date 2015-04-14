@@ -1,29 +1,59 @@
 package system;
 
 import java.rmi.RemoteException;
+import java.rmi.registry.LocateRegistry;
+import java.rmi.registry.Registry;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 
 import api.Result;
 import api.Space;
 import api.Task;
 
 public class SpaceImpl extends UnicastRemoteObject implements Space{
+	
+	private BlockingQueue<Task<?>> taskList;
+	private BlockingQueue<Result<?>> resultList;
 
 	protected SpaceImpl() throws RemoteException {
 		super();
-		// TODO Auto-generated constructor stub
+		taskList = new LinkedBlockingQueue<Task<?>>();
+		resultList = new LinkedBlockingQueue<Result<?>>();
+	}
+	
+	public static void main(String[] args){
+		if(System.getSecurityManager() == null){
+			System.setSecurityManager(new SecurityManager());
+		}
+		
+		try{
+			Space space = new SpaceImpl();
+			Registry registry = LocateRegistry.createRegistry(PORT);
+			registry.rebind(SERVICE_NAME, space);
+			System.out.println("SpaceImpl.main: Ready.");
+			
+		}
+		catch(Exception e){
+			System.err.println("Error in SpaceImpl.main");
+			e.printStackTrace();
+		}
 	}
 
 	@Override
 	public void putAll(List<Task> taskList) throws RemoteException {
-		// TODO Auto-generated method stub
-		
+
+		taskList.addAll(taskList);
 	}
 
 	@Override
 	public Result take() throws RemoteException {
-		// TODO Auto-generated method stub
+		try {
+			return (Result) resultList.take();
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		return null;
 	}
 
@@ -35,8 +65,17 @@ public class SpaceImpl extends UnicastRemoteObject implements Space{
 
 	@Override
 	public void register(Computer computer) throws RemoteException {
-		// TODO Auto-generated method stub
-		
+		new ComputerProxy(computer, this);		
+	}
+
+	@Override
+	public Task takeTask() throws RemoteException, InterruptedException {
+		return taskList.take();
+	}
+
+	@Override
+	public void putResult(Result result) throws RemoteException, InterruptedException {
+		resultList.put(result);
 	}
 
 }
