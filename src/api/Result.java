@@ -3,7 +3,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author Peter Cappello
+ * @author 
  * @param <T> type of return value of corresponding Task.
  */
 public class Result<T> implements Serializable
