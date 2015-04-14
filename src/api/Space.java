@@ -21,7 +21,7 @@ public interface Space extends Remote
     
     Task takeTask() throws RemoteException, InterruptedException;
     
-    void putResult(Result result) throws RemoteException, InterruptedException;
+    void putResult(Result<?> result) throws RemoteException, InterruptedException;
 
     void exit() throws RemoteException;
     

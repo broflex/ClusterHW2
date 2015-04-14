@@ -14,6 +14,10 @@ import api.Task;
 
 public class SpaceImpl extends UnicastRemoteObject implements Space{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8696217424025604919L;
 	private BlockingQueue<Task<?>> taskList;
 	private BlockingQueue<Result<?>> resultList;
 
@@ -69,13 +73,13 @@ public class SpaceImpl extends UnicastRemoteObject implements Space{
 	}
 
 	@Override
-	public Task takeTask() throws RemoteException, InterruptedException {
+	public Task<?> takeTask() throws RemoteException, InterruptedException {
 		return taskList.take();
 	}
 
 	@Override
-	public void putResult(Result result) throws RemoteException, InterruptedException {
-		resultList.put(result);
+	public void putResult(Result<?> result) throws RemoteException, InterruptedException {
+		resultList.add(result);
 	}
 
 }
