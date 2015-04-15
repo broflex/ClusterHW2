@@ -18,6 +18,10 @@ import java.io.Serializable;
 
 public class TaskMandelbrotSet extends JFrame implements Task<Integer[][]> {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2307297602133677254L;
 	private double cornerReal;
 	private double cornerIm;
 	private double length;

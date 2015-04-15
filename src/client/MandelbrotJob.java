@@ -20,7 +20,6 @@ public class MandelbrotJob implements Job {
 	private double EDGE_LENGTH;
 	private int N_PIXELS;
 	private int ITERATION_LIMIT;
-	private int nrOfTasks;
 	private List<Task> tasks;
 	private Integer[][] RESULT;
 	private Map<String, Point2D> identifierMap;
@@ -32,7 +31,6 @@ public class MandelbrotJob implements Job {
 		this.EDGE_LENGTH = EDGE_LENGTH;
 		this.N_PIXELS = N_PIXELS;
 		this.ITERATION_LIMIT = ITERATION_LIMIT;
-		this.nrOfTasks = 0;
 		this.RESULT = new Integer[N_PIXELS][N_PIXELS];
 		this.identifierMap = new HashMap<String, Point2D>();
 		
@@ -42,6 +40,7 @@ public class MandelbrotJob implements Job {
 	@Override
 	public void generateTasks(Space space) throws RemoteException {
 
+	
 		int i = 0;
 		int j = 0;
 		double step = EDGE_LENGTH / N_PIXELS;
@@ -51,24 +50,23 @@ public class MandelbrotJob implements Job {
 				String identifier = i+","+j;
 				Task<Integer[][]> mandelbrotSetTask = new TaskMandelbrotSet(x,
 						y, step, TASK_STEP, ITERATION_LIMIT, identifier);
+
+				
 				identifierMap.put(identifier, new Point2D.Double(i,j));
-				nrOfTasks++;
+
+				tasks.add(mandelbrotSetTask);
 			}
 		}
 		space.putAll(tasks);
+		System.out.println("der");
 
 	}
 
 	@Override
 	public void getResults(Space space) throws RemoteException {
-		long copmuterTime = 0L;
-		long clientTime = 0L;
-		
-		double tempLength = Double.MAX_VALUE;
-		
+	
 		for(int i = 0; i < identifierMap.size(); i++){
 			Result<Integer[][]> results = space.take();
-			long currentTime = System.currentTimeMillis();
 			
 			Integer[][] values = results.getTaskReturnValue();
 			String identifier = results.getTaskIdentifier();
@@ -91,6 +89,7 @@ public class MandelbrotJob implements Job {
 
 	@Override
 	public Integer[][] getAllResults() {
+		System.out.println(RESULT);
 		return RESULT;
 	}
 
