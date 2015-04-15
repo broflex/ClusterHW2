@@ -1,5 +1,6 @@
 package client;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -15,7 +16,7 @@ public class TspJob implements Job{
 	private double[][] cities;
 	private int nrOfTasks;
 	private List<Task> tasks;
-	private double[] minimalPath;
+	private int[] minimalPath;
 	
 	public TspJob(double[][] cities){
 		this.cities = cities;
@@ -32,17 +33,18 @@ public class TspJob implements Job{
 		for(int city = lastCity + 1; city < cities.length; city++){
 			int firstCity = city;
 			
-			Task<List<Integer>> tspTask = new TaskEuclideanTsp(cities);
+			Task<int[]> tspTask = new TaskEuclideanTsp(cities);
 			tasks.add(tspTask);
 			nrOfTasks++;
+			space.put(tspTask);
 		}
-		
-		space.putAll(tasks);
+		//space.putAll(tasks);
 		
 	}
 
 	@Override
 	public void getResults(Space space) throws RemoteException {
+		
 
 		long copmuterTime = 0L;
 		long clientTime = 0L;
@@ -50,10 +52,10 @@ public class TspJob implements Job{
 		double tempLength = Double.MAX_VALUE;
 		
 		for(int i = 0; i < tasks.size(); i++){
-			Result<double[]> results = space.take();
+			Result<int[]> results = (Result<int[]>) space.take();
 			long currentTime = System.currentTimeMillis();
-			
-			double[] path = results.getTaskReturnValue();
+						
+			int[] path = results.getTaskReturnValue();
 			double pathLength = findLength(path);
 			
 			if(pathLength < tempLength){
@@ -66,11 +68,11 @@ public class TspJob implements Job{
 	}
 
 	@Override
-	public Object getAllResults() {
+	public int[] getAllResults() {
 		return minimalPath;
 	}
 	
-	public double findLength(double[] path){
+	public double findLength(int[] path){
 		double length = 0;
 		
 		
