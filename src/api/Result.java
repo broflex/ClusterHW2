@@ -3,7 +3,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author 
+ * @author
  * @param <T> type of return value of corresponding Task.
  */
 public class Result<T> implements Serializable
@@ -12,7 +12,7 @@ public class Result<T> implements Serializable
     private final long taskRunTime;
     private String taskIdentifier;
 
-    public Result( T taskReturnValue, long taskRunTime , String taskIdentifier)
+    public Result( T taskReturnValue, long taskRunTime, String taskIdentifier )
     {
         assert taskReturnValue != null;
         assert taskRunTime >= 0;
@@ -24,7 +24,7 @@ public class Result<T> implements Serializable
     public T getTaskReturnValue() { return taskReturnValue; }
 
     public long getTaskRunTime() { return taskRunTime; }
-    
+
     @Override
     public String toString()
     {
@@ -35,7 +35,7 @@ public class Result<T> implements Serializable
         return stringBuilder.toString();
     }
 
-	public String getTaskIdentifier() {
-		return this.taskIdentifier;
-	}
+    public String getTaskIdentifier() {
+        return this.taskIdentifier;
+    }
 }
