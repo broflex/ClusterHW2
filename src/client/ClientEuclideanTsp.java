@@ -6,6 +6,7 @@ import java.awt.Container;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import java.rmi.Naming;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -18,7 +19,7 @@ import javax.swing.JScrollPane;
 import system.SpaceImpl;
 import api.Space;
 
-public class ClientEuclideanTsp{
+public class ClientEuclideanTsp implements Serializable{
 	
 	private static final double[][] CITIES = { { 1, 1 }, { 8, 1 }, { 8, 8 }, { 1, 8 }, { 2, 2 },
 			{ 7, 2 }, { 7, 7 }, { 2, 7 }, { 3, 3 }, { 6, 3 }, { 6, 6 },
@@ -28,7 +29,7 @@ public class ClientEuclideanTsp{
 	
 	public static void main(String[] args){
 		
-		String tempName = "TspClient";
+		String tempName = "localhost";
 		
 		TspJob tspJob = new TspJob(CITIES);
 		
@@ -39,7 +40,12 @@ public class ClientEuclideanTsp{
 			
 			long startOfJob = System.currentTimeMillis();
 			
-			Space space = (Space) Naming.lookup("rmi://" + tempName + "/" + Space.SERVICE_NAME);
+			System.out.println("TspClient ready.");
+			
+			String url = "rmi://" + tempName + ":" + Space.PORT + "/"
+					+ Space.SERVICE_NAME;
+			
+			Space space = (Space) Naming.lookup(url);
 			tspJob.generateTasks(space);
 			tspJob.getResults(space);
 			int[] minimalPath = (int[]) tspJob.getAllResults();
