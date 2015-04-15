@@ -14,11 +14,10 @@ public class ClientMandelbrotSet extends Client<Integer[][]>{
     private static final double EDGE_LENGTH = 0.01611;
     private static final int N_PIXELS = 1024;
     private static final int ITERATION_LIMIT = 512;
-    private static final String tempName = "localhost";
 
     public ClientMandelbrotSet() throws RemoteException, NotBoundException, MalformedURLException
     {
-        super( "Mandelbrot Set Visualizer", tempName );
+        super( "Mandelbrot Set Visualizer", "localhost" );
     }
 
     public static void main(String[] args) throws Exception{
