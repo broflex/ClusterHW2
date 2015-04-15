@@ -11,7 +11,7 @@ import api.Task;
  * @author Samson Svendsen, Simen Aakhus
  *
  */
-public class TaskEuclideanTsp implements Task<List<Integer>> {
+public class TaskEuclideanTsp implements Task<int[]> {
 
 	double[][] cities;
 	
@@ -123,13 +123,13 @@ public class TaskEuclideanTsp implements Task<List<Integer>> {
 	 * Method to execute calculations
 	 * @return returns the TSP path as an integer array of cities.
 	 */
-	public List<Integer> call() {
+	public int[] call() {
 		double[][] adj = calcAdjacencyMatrix(cities);
 		int[] path = tsp(adj);
 	
-		List<Integer> pathList = new ArrayList<Integer>();		
+		int[] pathList = new int[cities.length];
 		for (int index = 0; index < path.length; index++) {
-			pathList.add(path[index]);
+			pathList[index] = path[index];
 		}
 
 		return pathList;

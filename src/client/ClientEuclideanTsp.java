@@ -4,9 +4,11 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
@@ -16,7 +18,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
 
-public class ClientEuclideanTsp extends Client<List<Integer>> {
+public class ClientEuclideanTsp extends Client<List<Integer>> implements Serializable{
 
 	/**
 	 * 
@@ -54,8 +56,16 @@ public class ClientEuclideanTsp extends Client<List<Integer>> {
 
 			tspJob.generateTasks(space);
 			tspJob.getResults(space);
-			Integer[] minimalPath = (Integer[]) tspJob.getAllResults();
-			List<Integer> minPath = Arrays.asList(minimalPath);
+
+			int[] minimalPath = tspJob.getAllResults();
+			
+			//System.out.println("The path contains " + minimalPath + " cities");
+			
+			List<Integer> minPath = new ArrayList<Integer>();
+			
+			for(int i = 0; i < minimalPath.length; i++){
+				minPath.add(minimalPath[i]);
+			}
 
 			// Displaying results
 			client.begin();

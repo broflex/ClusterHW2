@@ -32,9 +32,11 @@ public class ComputerProxy implements Runnable{
 				
 			}catch(RemoteException e){
 				System.err.println("Remote Exception in thread: " + this.t.getName());
+				e.printStackTrace();
 			}
 			catch(InterruptedException e){
 				System.err.println("Interrupted Exception in thread: " + this.t.getName());
+				e.printStackTrace();
 			}
 		}
 	}

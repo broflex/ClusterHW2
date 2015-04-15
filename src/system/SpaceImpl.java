@@ -1,5 +1,6 @@
 package system;
 
+import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -49,6 +50,7 @@ public class SpaceImpl extends UnicastRemoteObject implements Space{
 	public void putAll(List<Task> taskList) throws RemoteException {
 
 		taskList.addAll(taskList);
+		
 	}
 
 	@Override
@@ -80,6 +82,13 @@ public class SpaceImpl extends UnicastRemoteObject implements Space{
 	@Override
 	public void putResult(Result<?> result) throws RemoteException, InterruptedException {
 		resultList.add(result);
+	}
+
+	@Override
+	public void put(Task task) throws RemoteException {
+
+		taskList.add(task);
+
 	}
 
 }

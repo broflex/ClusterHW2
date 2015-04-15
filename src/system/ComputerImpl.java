@@ -7,6 +7,7 @@ import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 
 import api.Result;
+import api.Space;
 import api.Task;
 
 public class ComputerImpl<T> extends UnicastRemoteObject implements Computer {
@@ -31,7 +32,7 @@ public class ComputerImpl<T> extends UnicastRemoteObject implements Computer {
 	}
 	
 	public static void main(String[] args){
-		String spaceHost = args[0];
+		String spaceHost = "localhost";
 		
 		if (System.getSecurityManager() == null){
 			System.setSecurityManager(new SecurityManager());
@@ -40,7 +41,10 @@ public class ComputerImpl<T> extends UnicastRemoteObject implements Computer {
 		try{
 			Computer c = new ComputerImpl();
 			
-			ComputerSpaceInterface space = (ComputerSpaceInterface) Naming.lookup("//" + spaceHost +"/");
+			String url = "rmi://" + spaceHost + ":" + Space.PORT + "/"
+					+ Space.SERVICE_NAME;
+			
+			Space space =  (Space) Naming.lookup(url);
 			space.register(c);
 			
 			System.out.println("Computer ready");	
@@ -54,9 +58,6 @@ public class ComputerImpl<T> extends UnicastRemoteObject implements Computer {
 			e.printStackTrace();
 		}
 		catch (NotBoundException e) {
-			System.err.println("ComputerImpl exception : ");
-			e.printStackTrace();
-		} catch (InterruptedException e) {
 			System.err.println("ComputerImpl exception : ");
 			e.printStackTrace();
 		}
