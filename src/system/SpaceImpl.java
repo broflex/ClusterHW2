@@ -21,7 +21,7 @@ public class SpaceImpl extends UnicastRemoteObject implements Space{
 	private BlockingQueue<Task<?>> taskList;
 	private BlockingQueue<Result<?>> resultList;
 
-	protected SpaceImpl() throws RemoteException {
+	public SpaceImpl() throws RemoteException {
 		super();
 		taskList = new LinkedBlockingQueue<Task<?>>();
 		resultList = new LinkedBlockingQueue<Result<?>>();
