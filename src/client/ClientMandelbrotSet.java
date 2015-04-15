@@ -1,11 +1,13 @@
 package client;
 
+import api.Space;
 import tasks.TaskMandelbrotSet;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.net.MalformedURLException;
+import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
@@ -16,18 +18,39 @@ public class ClientMandelbrotSet extends Client<Integer[][]>{
     private static final double EDGE_LENGTH = 0.01611;
     private static final int N_PIXELS = 1024;
     private static final int ITERATION_LIMIT = 512;
+    private static final String tempName = "localhost";
+
 
 
     public ClientMandelbrotSet() throws RemoteException, NotBoundException, MalformedURLException
     {
-        super( "Mandelbrot Set Visualizer", "128.111.43.28",
+        super( "Mandelbrot Set Visualizer", tempName,
                 new TaskMandelbrotSet( LOWER_LEFT_X, LOWER_LEFT_Y, EDGE_LENGTH, N_PIXELS,
                         ITERATION_LIMIT) );
     }
 
-    private static void main(String[] args[]) {
+    private static void main(String[] args[]) throws Exception{
+
+        MandelbrotJob mandelbrotJob = new MandelbrotJob();
+
         if (System.getSecurityManager() == null) {
             System.setSecurityManager(new SecurityManager());
+        }
+
+
+        try {
+            ClientMandelbrotSet client = new ClientMandelbrotSet();
+            client.begin();
+
+            mandelbrotJob.generateTasks(client.space);
+            mandelbrotJob.getResults(client.space);
+
+            Integer[][] counts = mandelbrotJob.getAllResults();
+            client.add(client.getLabel(counts));
+            client.end();
+
+        } catch (RemoteException e) {
+            e.printStackTrace();
         }
     }
 
