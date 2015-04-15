@@ -52,9 +52,9 @@ public class SpaceImpl extends UnicastRemoteObject implements Space{
 	}
 
 	@Override
-	public Result take() throws RemoteException {
+	public Result<?> take() throws RemoteException {
 		try {
-			return (Result) resultList.take();
+			return (Result<?>) resultList.take();
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
