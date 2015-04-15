@@ -20,30 +20,25 @@ public class ClientMandelbrotSet extends Client<Integer[][]>{
     private static final int ITERATION_LIMIT = 512;
     private static final String tempName = "localhost";
 
-
-
     public ClientMandelbrotSet() throws RemoteException, NotBoundException, MalformedURLException
     {
-        super( "Mandelbrot Set Visualizer", tempName,
-                new TaskMandelbrotSet( LOWER_LEFT_X, LOWER_LEFT_Y, EDGE_LENGTH, N_PIXELS,
-                        ITERATION_LIMIT) );
+        super( "Mandelbrot Set Visualizer", tempName );
     }
 
-    private static void main(String[] args[]) throws Exception{
+    public static void main(String[] args) throws Exception{
 
-        MandelbrotJob mandelbrotJob = new MandelbrotJob();
+        MandelbrotJob mandelbrotJob = new MandelbrotJob(LOWER_LEFT_X, LOWER_LEFT_Y, EDGE_LENGTH, N_PIXELS, ITERATION_LIMIT);
 
         if (System.getSecurityManager() == null) {
             System.setSecurityManager(new SecurityManager());
         }
 
-
         try {
             ClientMandelbrotSet client = new ClientMandelbrotSet();
             client.begin();
 
-            mandelbrotJob.generateTasks(client.space);
-            mandelbrotJob.getResults(client.space);
+            mandelbrotJob.generateTasks(space);
+            mandelbrotJob.getResults(space);
 
             Integer[][] counts = mandelbrotJob.getAllResults();
             client.add(client.getLabel(counts));
