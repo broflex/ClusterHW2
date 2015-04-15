@@ -27,7 +27,7 @@ public class ComputerImpl<T> extends UnicastRemoteObject implements Computer {
 		T value = (T) t.call();
 		long end = System.currentTimeMillis();
 		long time = end - begin;
-		Result<T> r = new Result<T>(value, time);
+		Result<T> r = new Result<T>(value, time, t.getTaskIdentifier());
 		return r;
 	}
 	

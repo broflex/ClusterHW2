@@ -9,7 +9,12 @@ import java.rmi.RemoteException;
 
 public class ClientMandelbrotSet extends Client<Integer[][]>{
 
-    private static final double LOWER_LEFT_X = -0.7510975859375;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = -9197468818871468628L;
+	
+	private static final double LOWER_LEFT_X = -0.7510975859375;
     private static final double LOWER_LEFT_Y = 0.1315680625;
     private static final double EDGE_LENGTH = 0.01611;
     private static final int N_PIXELS = 1024;
@@ -32,10 +37,14 @@ public class ClientMandelbrotSet extends Client<Integer[][]>{
             ClientMandelbrotSet client = new ClientMandelbrotSet();
             client.begin();
 
+            System.out.println("1");
             mandelbrotJob.generateTasks(space);
+            System.out.println("2");
             mandelbrotJob.getResults(space);
+            System.out.println("3");
 
             Integer[][] counts = mandelbrotJob.getAllResults();
+            System.out.println("4");
             client.add(client.getLabel(counts));
             client.end();
 

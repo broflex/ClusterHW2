@@ -32,13 +32,15 @@ public class TspJob implements Job{
 		
 		for(int city = lastCity + 1; city < cities.length; city++){
 			int firstCity = city;
+
+			String identifier = firstCity +","+lastCity;
 			
-			Task<int[]> tspTask = new TaskEuclideanTsp(cities);
+			Task<int[]> tspTask = new TaskEuclideanTsp(cities,identifier);
 			tasks.add(tspTask);
 			nrOfTasks++;
-			space.put(tspTask);
+//			space.put(tspTask);
 		}
-		//space.putAll(tasks);
+		space.putAll(tasks);
 		
 	}
 

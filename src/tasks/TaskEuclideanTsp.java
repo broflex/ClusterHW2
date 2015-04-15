@@ -14,13 +14,14 @@ import api.Task;
 public class TaskEuclideanTsp implements Task<int[]> {
 
 	double[][] cities;
-	
+	private String identifier;
 	/**
 	 * Constructor that initiates cities
 	 * @param cities A 2D double array of cities, where cities[i][0] gives x-coordinate, and cities[i][1] is the y-coordinate.
 	 */
-	public TaskEuclideanTsp(double[][] cities) {
+	public TaskEuclideanTsp(double[][] cities, String identifier) {
 		this.cities = cities;
+		this.identifier = identifier;
 	}
 
 	/**
@@ -104,7 +105,7 @@ public class TaskEuclideanTsp implements Task<int[]> {
 	}
 
 	/**
-	 * Checks wether a city is in the current path
+	 * Checks whether a city is in the current path
 	 * @param path current path of cities.
 	 * @param city a city
 	 * @return true if city is in the current path, false if it is not.
@@ -133,5 +134,8 @@ public class TaskEuclideanTsp implements Task<int[]> {
 		}
 
 		return pathList;
+	}
+	public String getTaskIdentifier(){
+		return this.identifier;
 	}
 }

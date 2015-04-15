@@ -11,4 +11,6 @@ public interface Task<V> extends Serializable, Callable<V>
 { 
     @Override
     V call(); 
+    
+    String getTaskIdentifier();
 }
