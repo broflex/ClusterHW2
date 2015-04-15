@@ -49,26 +49,6 @@ public class TaskMandelbrotSet extends JFrame implements Task<Integer[][]> {
 		this.iterationLim = iterationLim;
 	}
 
-	public double getCornerReal() {
-		return cornerReal;
-	}
-
-	public double getCornerIm() {
-		return cornerIm;
-	}
-
-	public double getLength() {
-		return length;
-	}
-
-	public int getN() {
-		return n;
-	}
-
-	public int getIterationLim() {
-		return iterationLim;
-	}
-
 	@Override
 	/**
 	 * this method determines what complex numbers are part of the Mandelbrot Set
