@@ -49,45 +49,25 @@ public class TaskMandelbrotSet extends JFrame implements Task<Integer[][]> {
 		this.iterationLim = iterationLim;
 	}
 
-	public double getCornerReal() {
-		return cornerReal;
-	}
-
-	public double getCornerIm() {
-		return cornerIm;
-	}
-
-	public double getLength() {
-		return length;
-	}
-
-	public int getN() {
-		return n;
-	}
-
-	public int getIterationLim() {
-		return iterationLim;
-	}
-
 	@Override
 	/**
 	 * this method determines what complex numbers are part of the Mandelbrot Set
 	 * @return returns the 2D Integer array containing the complex numbers in the Mandelbrot set
 	 */
 	public Integer[][] call() {
-		int n = getN();
 		Integer[][] counts = new Integer[n][n];
+        double delta = length / n;
 		for (int row = 0; row < n; row++) {
 			for (int col = 0; col < n; col++) {
+				double x0 = cornerReal + row * delta;
+				double y0 = cornerIm + col * delta;
 				double x = 0;
-				double y = 0;
-				double c_re = (col - n / 2.0) * getLength() / n;
-				double c_im = (row - n / 2.0) * getLength() / n;
+                double y = 0;
 				int iterationCount = 0;
-				while (x * x + y * y <= 4 && iterationCount < getIterationLim()) {
-					double x_kplus1 = x * x - y * y + c_re;
-					y = 2 * x * y + c_im;
-					x = x_kplus1;
+				while (x * x + y * y <= 4 && iterationCount < iterationLim) {
+					double x_kPlus1 = x * x - y * y + x0;
+					y = 2 * x * y + y0;
+					x = x_kPlus1;
 					iterationCount++;
 				}
 				counts[col][row] = iterationCount;
