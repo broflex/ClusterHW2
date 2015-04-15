@@ -1,6 +1,7 @@
 package system;
 
 import java.rmi.RemoteException;
+import java.util.Random;
 
 import api.Result;
 import api.Space;
@@ -15,7 +16,7 @@ public class ComputerProxy implements Runnable{
 	public ComputerProxy(Computer computer, SpaceImpl space){
 		this.computer = computer;
 		this.space = space;
-		t = new Thread(this, "ComputerProxy");
+		t = new Thread(this, "ComputerProxy_" + getRandomNumber());
 		t.start();
 	}
 	
@@ -36,6 +37,17 @@ public class ComputerProxy implements Runnable{
 				System.err.println("Interrupted Exception in thread: " + this.t.getName());
 			}
 		}
+	}
+	
+	public String getRandomNumber(){
+		Random rand = new Random();
+		int a = rand.nextInt(9);
+		String code = Integer.toString(a);
+		a = rand.nextInt(9);
+		code = code + Integer.toString(a);
+		a = rand.nextInt(9);
+		code = code + Integer.toString(a);
+		return code;
 	}
 
 	
