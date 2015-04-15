@@ -27,23 +27,19 @@ import system.ComputerImpl;
  */
 @SuppressWarnings("serial")
 public class Client<T> extends JFrame implements Serializable{
-	final protected Task<T> task;
+	
 	protected T taskReturnValue;
 	private long clientStartTime;
-	protected Space space;
+	protected static Space space;
 
-	public Client(final String title, final String domainName,
-			final Task<T> task) throws RemoteException, NotBoundException,
+	public Client(final String title, final String domainName) throws RemoteException, NotBoundException,
 			MalformedURLException {
-		this.task = task;
 		setTitle(title);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		String url = "rmi://" + domainName + ":" + Space.PORT + "/"
 				+ Space.SERVICE_NAME;
-		//String url = "//" + domainName + "/" + Computer.SERVICE_NAME;
 		
-	//	computer = (Computer) Naming.lookup(url);
 		space = (Space) Naming.lookup(url);
 	}
 
