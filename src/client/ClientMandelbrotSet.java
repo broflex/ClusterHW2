@@ -1,13 +1,9 @@
 package client;
 
-import api.Space;
-import tasks.TaskMandelbrotSet;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.net.MalformedURLException;
-import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 
@@ -45,6 +41,13 @@ public class ClientMandelbrotSet extends Client<Integer[][]>{
             client.end();
 
         } catch (RemoteException e) {
+            System.err.println("RemoteException in ClientMandelbrotSet: ");
+            e.printStackTrace();
+        } catch (MalformedURLException e) {
+            System.err.println("MalformedURLException in ClientMandelbrotSet: ");
+            e.printStackTrace();
+        } catch (NotBoundException e) {
+            System.err.println("NotBoundException in ClientMandelbrotSet: ");
             e.printStackTrace();
         }
     }
