@@ -9,7 +9,6 @@ public class MandelbrotJob implements Job{
 	@Override
 	public void generateTasks(Space space) throws RemoteException {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
