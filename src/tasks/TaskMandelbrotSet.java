@@ -23,6 +23,7 @@ public class TaskMandelbrotSet extends JFrame implements Task<Integer[][]> {
 	private double length;
 	private int n;
 	private int iterationLim;
+	private String identifier;
 
 	/**
 	 * Constructor that initializes the variables
@@ -41,12 +42,13 @@ public class TaskMandelbrotSet extends JFrame implements Task<Integer[][]> {
 	 *            defining which regions that are part of the Mandelbrot set
 	 */
 	public TaskMandelbrotSet(double cornerReal, double cornerIm, double length,
-			int n, int iterationLim) {
+			int n, int iterationLim, String identifier) {
 		this.cornerReal = cornerReal;
 		this.cornerIm = cornerIm;
 		this.length = length;
 		this.n = n;
 		this.iterationLim = iterationLim;
+		this.identifier = identifier;
 	}
 
 	@Override
@@ -74,6 +76,9 @@ public class TaskMandelbrotSet extends JFrame implements Task<Integer[][]> {
 			}
 		}
 		return counts;
+	}
+	public String getTaskIdentifier(){
+		return identifier;
 	}
 
 }

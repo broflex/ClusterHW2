@@ -32,7 +32,9 @@ public class TspJob implements Job{
 		for(int city = lastCity + 1; city < cities.length; city++){
 			int firstCity = city;
 			
-			Task<List<Integer>> tspTask = new TaskEuclideanTsp(cities);
+			String identifier = firstCity +","+lastCity;
+			
+			Task<List<Integer>> tspTask = new TaskEuclideanTsp(cities,identifier);
 			tasks.add(tspTask);
 			nrOfTasks++;
 		}
