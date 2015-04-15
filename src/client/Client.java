@@ -30,6 +30,7 @@ public class Client<T> extends JFrame implements Serializable{
 	final protected Task<T> task;
 	protected T taskReturnValue;
 	private long clientStartTime;
+	protected Space space;
 
 	public Client(final String title, final String domainName,
 			final Task<T> task) throws RemoteException, NotBoundException,
@@ -43,7 +44,7 @@ public class Client<T> extends JFrame implements Serializable{
 		//String url = "//" + domainName + "/" + Computer.SERVICE_NAME;
 		
 	//	computer = (Computer) Naming.lookup(url);
-		Space space = (Space) Naming.lookup(url);
+		space = (Space) Naming.lookup(url);
 	}
 
 	public void begin() {
